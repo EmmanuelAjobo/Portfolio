@@ -184,7 +184,7 @@ export const Introduction = () => {
                     </div>
                     <div className="flex intro-animate flex-col sm:flex-row sm:items-end gap-6 sm:gap-12 shrink-0">
                         <a
-                            href="https://www.linkedin.com/in/your-linkedin-handle"
+                            href="www.linkedin.com/in/emmanuel-ajobo"
                             target="_blank"
                             rel="noopener noreferrer"
                             className="group relative inline-flex items-center gap-3 px-6 py-3 rounded-full bg-primary w-40 text-black font-mono text-[11px] font-bold uppercase tracking-[0.2em] overflow-hidden transition-all duration-300 hover:bg-white hover:shadow-[0_0_25px_rgba(255,255,255,0.3)] hover:scale-[1.02] active:scale-[0.98]"
