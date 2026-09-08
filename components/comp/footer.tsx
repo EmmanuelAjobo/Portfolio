@@ -67,7 +67,7 @@ const socialLinks = [
   },
   {
     icon: BriefcaseBusiness,
-    href: "www.linkedin.com/in/emmanuel-ajobo",
+    href: "https://www.linkedin.com/in/emmanuel-ajobo/",
     label: "LinkedIn",
   },
   {
@@ -181,7 +181,6 @@ export function Footer() {
                     key={label}
                     href={href}
                     target={href.startsWith("http") ? "_blank" : undefined}
-                    rel={href.startsWith("http") ? "noopener noreferrer" : undefined}
                     aria-label={label}
                     className="text-muted-foreground hover:text-primary transition-colors"
                   >
