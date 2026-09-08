@@ -1,4 +1,5 @@
-"use client"
+"use client";
+
 import Link from "next/link";
 import {
   GraduationCap,
@@ -86,7 +87,6 @@ export function Footer() {
       className="relative w-full min-h-[90vh] flex flex-col justify-between border-t border-border scroll-mt-[10vh]"
     >
       <div className="mx-auto flex w-full max-w-3xl flex-1 flex-col justify-evenly px-4 pt-6 pb-8 sm:px-6 sm:pt-12 sm:pb-12">
-
         {/* Education Timeline Section */}
         <div className="w-full">
           <h2 className="mb-4 text-lg font-semibold tracking-tight text-foreground sm:mb-8 sm:text-2xl">
@@ -150,7 +150,6 @@ export function Footer() {
 
         {/* Footer Area */}
         <div className="flex flex-col w-full gap-4 border-t border-border pt-2 sm:gap-8 sm:pt-8 mt-3">
-
           <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
             {/* Logo */}
             <div className="flex items-center gap-2.5">
@@ -168,30 +167,39 @@ export function Footer() {
             {/* Nav & Socials */}
             <div className="flex items-center justify-between gap-4 sm:flex-col sm:items-end">
               <nav className="flex gap-3 sm:gap-6">
-                {navLinks.map((link) => {
-                    const formattedHref = item.href.trim().startsWith("http")
-                                                          ? item.href.trim()
-                                                          : `https://${item.href.trim()}`;
-                 return(
-
-                  <a key={link.label} className="text-xs text-muted-foreground hover:text-primary transition-colors" href={link.href}>{link.label}</a>
-
-                ); 
-    })}
+                {navLinks.map((link) => (
+                  <a
+                    key={link.label}
+                    className="text-xs text-muted-foreground hover:text-primary transition-colors"
+                    href={link.href}
+                  >
+                    {link.label}
+                  </a>
+                ))}
               </nav>
 
               <div className="flex gap-6">
-                {socialLinks.map(({ icon: Icon, href, label }) => (
-                  <a
-                    key={label}
-                    href={formattedHref}
-                    target={href.startsWith("http") ? "_blank" : undefined}
-                    aria-label={label}
-                    className="text-muted-foreground hover:text-primary transition-colors"
-                  >
-                    <Icon className="h-4 w-4 sm:h-5 sm:w-5" strokeWidth={1.75} />
-                  </a>
-                ))}
+                {socialLinks.map(({ icon: Icon, href, label }) => {
+                  const cleanHref = href.trim();
+                  const isExternal = cleanHref.startsWith("http");
+                  const formattedHref =
+                    cleanHref.startsWith("http") || cleanHref.startsWith("mailto:")
+                      ? cleanHref
+                      : `https://${cleanHref}`;
+
+                  return (
+                    <a
+                      key={label}
+                      href={formattedHref}
+                      target={isExternal ? "_blank" : undefined}
+                      rel={isExternal ? "noopener noreferrer" : undefined}
+                      aria-label={label}
+                      className="text-muted-foreground hover:text-primary transition-colors"
+                    >
+                      <Icon className="h-4 w-4 sm:h-5 sm:w-5" strokeWidth={1.75} />
+                    </a>
+                  );
+                })}
               </div>
             </div>
           </div>
@@ -201,7 +209,6 @@ export function Footer() {
             <span>© {year} AJOBO E. All rights reserved.</span>
             <span>Built with Next.js, GSAP & shadcn/ui</span>
           </div>
-
         </div>
       </div>
     </footer>
