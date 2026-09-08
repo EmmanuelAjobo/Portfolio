@@ -1,12 +1,13 @@
 "use client";
 
 import { ProjectCard } from "@/tools/projectCard";
-import { useRef, useState, useCallback } from "react";
+import { useRef, useState, useCallback, useEffect } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { Draggable } from "gsap/Draggable";
 import { InertiaPlugin } from "gsap/InertiaPlugin";
 import { projectList } from "@/tools/projectList";
+import { Loader2 } from "lucide-react";
 
 gsap.registerPlugin(Draggable, InertiaPlugin);
 
@@ -37,13 +38,13 @@ const CARD_TILTS = projectList.map((_, i) =>
 );
 
 export function Projects() {
+  const [isReady, setIsReady] = useState(false);
   const sphereRef = useRef<HTMLDivElement>(null);
   const cardsRef = useRef<HTMLDivElement[]>([]);
   const wrappersRef = useRef<HTMLDivElement[]>([]);
   const rotRef = useRef({ x: 0, y: 0 });
   const focusedRef = useRef<number>(-1);
   
-  // Track which specific card index is focused
   const [focusedIndex, setFocusedIndex] = useState<number | null>(null);
 
   const isDragging = useRef(false);
@@ -54,6 +55,10 @@ export function Projects() {
   const [activeIndex, setActiveIndex] = useState(0);
 
   const settersRef = useRef<{ x: Function; y: Function; z: Function }[]>([]);
+
+  useEffect(() => {
+    setIsReady(true);
+  }, []);
 
   const applyOrbit = useCallback((rotX: number, rotY: number) => {
     rotRef.current = { x: rotX, y: rotY };
@@ -71,7 +76,7 @@ export function Projects() {
 
   const focusCard = useCallback((i: number) => {
     focusedRef.current = i;
-    setFocusedIndex(i); // Update state with focused card index
+    setFocusedIndex(i);
 
     if (wrappersRef.current[i]) wrappersRef.current[i].style.zIndex = "50";
     gsap.to(cardsRef.current[i], {
@@ -97,7 +102,7 @@ export function Projects() {
     if (i === -1) return;
     isAnimating.current = true;
     focusedRef.current = -1;
-    setFocusedIndex(null); // Reset focus state
+    setFocusedIndex(null);
 
     if (wrappersRef.current[i]) wrappersRef.current[i].style.zIndex = "";
     const { x: rx, y: ry } = rotRef.current;
@@ -131,6 +136,8 @@ export function Projects() {
 
   useGSAP(
     () => {
+      if (!isReady) return;
+
       const mm = gsap.matchMedia();
 
       mm.add("(min-width: 1024px)", () => {
@@ -208,7 +215,7 @@ export function Projects() {
 
       return () => mm.revert();
     },
-    { scope: sphereRef, dependencies: [applyOrbit] }
+    { scope: sphereRef, dependencies: [applyOrbit, isReady] }
   );
 
   const handleScroll = () => {
@@ -235,6 +242,19 @@ export function Projects() {
     }
   };
 
+  if (!isReady) {
+    return (
+      <section id="projects" className="relative w-full h-screen flex items-center justify-center bg-black text-white">
+        <div className="flex flex-col items-center gap-3">
+          <Loader2 className="h-6 w-6 animate-spin text-primary" />
+          <span className="text-xs font-mono text-white/50 tracking-widest uppercase">
+            Loading Workspace...
+          </span>
+        </div>
+      </section>
+    );
+  }
+
   return (
     <section id="projects" className="relative w-full h-screen overflow-hidden text-white bg-black">
       {/* Mobile & Tablet Horizontal Scroll View (< lg) */}
@@ -242,13 +262,13 @@ export function Projects() {
         <div
           ref={carouselRef}
           onScroll={handleScroll}
-          className="flex gap-4 px-[calc(50vw-140px)] sm:px-[calc(50vw-160px)] md:px-[calc(50vw-180px)] w-full overflow-x-auto snap-x snap-mandatory overscroll-x-contain scrollbar-none [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden items-center"
-          style={{ WebkitOverflowScrolling: "touch" }}
+          className="flex gap-4 px-[calc(50vw-140px)] sm:px-[calc(50vw-160px)] md:px-[calc(50vw-180px)] w-full overflow-x-auto snap-x snap-mandatory overscroll-x-contain scrollbar-none [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden items-center touch-pan-x"
+          style={{ WebkitOverflowScrolling: "touch", touchAction: "pan-x" }}
         >
           {projectList.map((c, i) => (
             <div
               key={c.id}
-              className="shrink-0 snap-center rounded-xl overflow-hidden border border-white/10 bg-white/5 select-none transition-transform duration-300"
+              className="shrink-0 snap-center rounded-xl overflow-hidden border border-white/10 bg-white/5 transition-transform duration-300"
               style={{
                 width: "min(75vw, 320px)",
                 aspectRatio: "3 / 4",
@@ -260,7 +280,7 @@ export function Projects() {
                 src={c.src}
                 href={c.href}
                 techstack={c.techstack}
-                focus={activeIndex === i} // Focus active item on mobile swipe
+                focus={activeIndex === i}
               />
             </div>
           ))}
@@ -329,7 +349,7 @@ export function Projects() {
                   src={c.src}
                   href={c.href}
                   techstack={c.techstack}
-                  focus={focusedIndex === i} // Evaluates true ONLY for the clicked/focused card
+                  focus={focusedIndex === i}
                 />
               </div>
             </div>
