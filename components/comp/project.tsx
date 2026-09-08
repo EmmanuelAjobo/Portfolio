@@ -7,7 +7,7 @@ import { useGSAP } from "@gsap/react";
 import { Draggable } from "gsap/Draggable";
 import { InertiaPlugin } from "gsap/InertiaPlugin";
 import { projectList } from "@/tools/projectList";
-import { Loader2 } from "lucide-react";
+import { Loader2, ChevronLeft, ChevronRight } from "lucide-react";
 
 gsap.registerPlugin(Draggable, InertiaPlugin);
 
@@ -242,6 +242,14 @@ export function Projects() {
     }
   };
 
+  const handlePrev = () => {
+    if (activeIndex > 0) scrollToCard(activeIndex - 1);
+  };
+
+  const handleNext = () => {
+    if (activeIndex < projectList.length - 1) scrollToCard(activeIndex + 1);
+  };
+
   if (!isReady) {
     return (
       <section id="projects" className="relative w-full h-screen flex items-center justify-center bg-black text-white">
@@ -259,31 +267,57 @@ export function Projects() {
     <section id="projects" className="relative w-full h-screen overflow-hidden text-white bg-black">
       {/* Mobile & Tablet Horizontal Scroll View (< lg) */}
       <div className="lg:hidden relative w-full h-full flex flex-col justify-center items-center overflow-hidden py-8">
-        <div
-          ref={carouselRef}
-          onScroll={handleScroll}
-          className="flex gap-4 px-[calc(50vw-140px)] sm:px-[calc(50vw-160px)] md:px-[calc(50vw-180px)] w-full overflow-x-auto snap-x snap-mandatory overscroll-x-contain scrollbar-none [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden items-center touch-pan-x"
-          style={{ WebkitOverflowScrolling: "touch", touchAction: "pan-x" }}
-        >
-          {projectList.map((c, i) => (
-            <div
-              key={c.id}
-              className="shrink-0 snap-center rounded-xl overflow-hidden border border-white/10 bg-white/5 transition-transform duration-300"
-              style={{
-                width: "min(75vw, 320px)",
-                aspectRatio: "3 / 4",
-              }}
-            >
-              <ProjectCard
-                title={c.title}
-                description={c.description}
-                src={c.src}
-                href={c.href}
-                techstack={c.techstack}
-                focus={activeIndex === i}
-              />
-            </div>
-          ))}
+        
+        {/* Carousel Container with Absolute Nav Buttons */}
+        <div className="relative w-full flex items-center justify-center">
+          
+          {/* Previous Button */}
+          <button
+            onClick={handlePrev}
+            disabled={activeIndex === 0}
+            aria-label="Previous Project"
+            className="absolute left-3 z-20 p-2.5 rounded-full bg-black/60 border border-white/20 text-white backdrop-blur-md transition-all active:scale-90 disabled:opacity-20 disabled:pointer-events-none"
+          >
+            <ChevronLeft className="w-5 h-5" />
+          </button>
+
+          {/* Carousel */}
+          <div
+            ref={carouselRef}
+            onScroll={handleScroll}
+            className="flex gap-4 px-[calc(50vw-140px)] sm:px-[calc(50vw-160px)] md:px-[calc(50vw-180px)] w-full overflow-x-auto snap-x snap-mandatory overscroll-x-contain scrollbar-none [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden items-center touch-pan-x"
+            style={{ WebkitOverflowScrolling: "touch", touchAction: "pan-x" }}
+          >
+            {projectList.map((c, i) => (
+              <div
+                key={c.id}
+                className="shrink-0 snap-center rounded-xl overflow-hidden border border-white/10 bg-white/5 transition-transform duration-300"
+                style={{
+                  width: "min(75vw, 320px)",
+                  aspectRatio: "3 / 4",
+                }}
+              >
+                <ProjectCard
+                  title={c.title}
+                  description={c.description}
+                  src={c.src}
+                  href={c.href}
+                  techstack={c.techstack}
+                  focus={activeIndex === i}
+                />
+              </div>
+            ))}
+          </div>
+
+          {/* Next Button */}
+          <button
+            onClick={handleNext}
+            disabled={activeIndex === projectList.length - 1}
+            aria-label="Next Project"
+            className="absolute right-3 z-20 p-2.5 rounded-full bg-black/60 border border-white/20 text-white backdrop-blur-md transition-all active:scale-90 disabled:opacity-20 disabled:pointer-events-none"
+          >
+            <ChevronRight className="w-5 h-5" />
+          </button>
         </div>
 
         {/* Dynamic Pagination Indicators */}
@@ -302,7 +336,7 @@ export function Projects() {
 
         <div className="mt-4 pointer-events-none">
           <span className="text-white/30 text-[10px] tracking-[0.3em] uppercase font-mono">
-            swipe to explore
+            swipe or use arrows
           </span>
         </div>
       </div>
