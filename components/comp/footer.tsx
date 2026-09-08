@@ -168,7 +168,11 @@ export function Footer() {
             {/* Nav & Socials */}
             <div className="flex items-center justify-between gap-4 sm:flex-col sm:items-end">
               <nav className="flex gap-3 sm:gap-6">
-                {navLinks.map((link) => (
+                {navLinks.map((link) => 
+                    const formattedHref = item.href.trim().startsWith("http")
+                                                          ? item.href.trim()
+                                                          : `https://${item.href.trim()}`;
+                 return(
 
                   <a key={link.label} className="text-xs text-muted-foreground hover:text-primary transition-colors" href={link.href}>{link.label}</a>
 
@@ -179,7 +183,7 @@ export function Footer() {
                 {socialLinks.map(({ icon: Icon, href, label }) => (
                   <a
                     key={label}
-                    href={href}
+                    href={formattedHref}
                     target={href.startsWith("http") ? "_blank" : undefined}
                     aria-label={label}
                     className="text-muted-foreground hover:text-primary transition-colors"
