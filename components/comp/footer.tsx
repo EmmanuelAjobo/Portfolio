@@ -26,7 +26,7 @@ const entries: EducationEntry[] = [
     icon: <GraduationCap className="h-4 w-4" strokeWidth={1.75} />,
     title: "B.Eng. Civil Engineering",
     subtitle: "Your University Name",
-    period: "20XX — 20XX",
+    period: "2020 — 2026",
     description:
       "Formal training in structural analysis, materials, and project management — foundations that carried over directly into building systems.",
   },
@@ -67,12 +67,12 @@ const socialLinks = [
   },
   {
     icon: BriefcaseBusiness,
-    href: "https://www.linkedin.com/in/emmanuel-ajobo/",
+    href: "www.linkedin.com/in/emmanuel-ajobo",
     label: "LinkedIn",
   },
   {
     icon: Mail,
-    href: "mailto:you@example.com",
+    href: "mailto:ajoboemmanuel04@gmail.com",
     label: "Email",
   },
 ];
@@ -86,7 +86,7 @@ export function Footer() {
       className="relative w-full min-h-[90vh] flex flex-col justify-between border-t border-border scroll-mt-[10vh]"
     >
       <div className="mx-auto flex w-full max-w-3xl flex-1 flex-col justify-evenly px-4 pt-6 pb-8 sm:px-6 sm:pt-12 sm:pb-12">
-        
+
         {/* Education Timeline Section */}
         <div className="w-full">
           <h2 className="mb-4 text-lg font-semibold tracking-tight text-foreground sm:mb-8 sm:text-2xl">
@@ -150,14 +150,14 @@ export function Footer() {
 
         {/* Footer Area */}
         <div className="flex flex-col w-full gap-4 border-t border-border pt-2 sm:gap-8 sm:pt-8 mt-3">
-          
+
           <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
             {/* Logo */}
             <div className="flex items-center gap-2.5">
               <Logo size={26} />
               <div className="flex flex-col">
                 <span className="text-xs font-semibold text-foreground sm:text-sm">
-                  Your Name
+                  Ajobo Emmanuel Jesufifunmi
                 </span>
                 <span className="text-[10px] text-muted-foreground sm:text-xs">
                   Civil engineer turned developer
@@ -169,19 +169,15 @@ export function Footer() {
             <div className="flex items-center justify-between gap-4 sm:flex-col sm:items-end">
               <nav className="flex gap-3 sm:gap-6">
                 {navLinks.map((link) => (
-                  <Link
-                    key={link.label}
-                    href={link.href}
-                    className="text-xs text-muted-foreground hover:text-primary transition-colors"
-                  >
-                    {link.label}
-                  </Link>
+
+                  <a key={link.label} className="text-xs text-muted-foreground hover:text-primary transition-colors" href={link.href}>{link.label}</a>
+
                 ))}
               </nav>
 
               <div className="flex gap-6">
                 {socialLinks.map(({ icon: Icon, href, label }) => (
-                  <Link
+                  <a
                     key={label}
                     href={href}
                     target={href.startsWith("http") ? "_blank" : undefined}
@@ -190,7 +186,7 @@ export function Footer() {
                     className="text-muted-foreground hover:text-primary transition-colors"
                   >
                     <Icon className="h-4 w-4 sm:h-5 sm:w-5" strokeWidth={1.75} />
-                  </Link>
+                  </a>
                 ))}
               </div>
             </div>
@@ -198,7 +194,7 @@ export function Footer() {
 
           {/* Copyright */}
           <div className="flex flex-col gap-1 border-t border-border/60 pt-3 text-[10px] sm:text-xs text-muted-foreground sm:flex-row sm:justify-between">
-            <span>© {year} Your Name. All rights reserved.</span>
+            <span>© {year} AJOBO E. All rights reserved.</span>
             <span>Built with Next.js, GSAP & shadcn/ui</span>
           </div>
 
