@@ -170,6 +170,7 @@ export function Footer() {
                 {navLinks.map((link) => (
                   <a
                     key={link.label}
+                    target="_blank"
                     className="text-xs text-muted-foreground hover:text-primary transition-colors"
                     href={link.href}
                   >
