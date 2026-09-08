@@ -5,5 +5,5 @@ export interface ProjectCardProps {
   href?: string;
   src?: string;
   techstack: string[];
-  focus: boolean;
+  focus?: boolean;
 }
