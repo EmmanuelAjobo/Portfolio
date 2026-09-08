@@ -168,7 +168,7 @@ export function Footer() {
             {/* Nav & Socials */}
             <div className="flex items-center justify-between gap-4 sm:flex-col sm:items-end">
               <nav className="flex gap-3 sm:gap-6">
-                {navLinks.map((link) => 
+                {navLinks.map((link) => {
                     const formattedHref = item.href.trim().startsWith("http")
                                                           ? item.href.trim()
                                                           : `https://${item.href.trim()}`;
@@ -176,7 +176,8 @@ export function Footer() {
 
                   <a key={link.label} className="text-xs text-muted-foreground hover:text-primary transition-colors" href={link.href}>{link.label}</a>
 
-                ))}
+                ); 
+    })}
               </nav>
 
               <div className="flex gap-6">
