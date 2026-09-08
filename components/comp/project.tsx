@@ -1,13 +1,12 @@
 "use client";
 
 import { ProjectCard } from "@/tools/projectCard";
-import { useRef, useState, useCallback, useEffect } from "react";
+import { useRef, useState, useCallback } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { Draggable } from "gsap/Draggable";
 import { InertiaPlugin } from "gsap/InertiaPlugin";
 import { projectList } from "@/tools/projectList";
-import { Loader2, ChevronLeft, ChevronRight } from "lucide-react";
 
 gsap.registerPlugin(Draggable, InertiaPlugin);
 
@@ -38,13 +37,13 @@ const CARD_TILTS = projectList.map((_, i) =>
 );
 
 export function Projects() {
-  const [isReady, setIsReady] = useState(false);
   const sphereRef = useRef<HTMLDivElement>(null);
   const cardsRef = useRef<HTMLDivElement[]>([]);
   const wrappersRef = useRef<HTMLDivElement[]>([]);
   const rotRef = useRef({ x: 0, y: 0 });
   const focusedRef = useRef<number>(-1);
   
+  // Track which specific card index is focused
   const [focusedIndex, setFocusedIndex] = useState<number | null>(null);
 
   const isDragging = useRef(false);
@@ -55,10 +54,6 @@ export function Projects() {
   const [activeIndex, setActiveIndex] = useState(0);
 
   const settersRef = useRef<{ x: Function; y: Function; z: Function }[]>([]);
-
-  useEffect(() => {
-    setIsReady(true);
-  }, []);
 
   const applyOrbit = useCallback((rotX: number, rotY: number) => {
     rotRef.current = { x: rotX, y: rotY };
@@ -76,7 +71,7 @@ export function Projects() {
 
   const focusCard = useCallback((i: number) => {
     focusedRef.current = i;
-    setFocusedIndex(i);
+    setFocusedIndex(i); // Update state with focused card index
 
     if (wrappersRef.current[i]) wrappersRef.current[i].style.zIndex = "50";
     gsap.to(cardsRef.current[i], {
@@ -102,7 +97,7 @@ export function Projects() {
     if (i === -1) return;
     isAnimating.current = true;
     focusedRef.current = -1;
-    setFocusedIndex(null);
+    setFocusedIndex(null); // Reset focus state
 
     if (wrappersRef.current[i]) wrappersRef.current[i].style.zIndex = "";
     const { x: rx, y: ry } = rotRef.current;
@@ -136,8 +131,6 @@ export function Projects() {
 
   useGSAP(
     () => {
-      if (!isReady) return;
-
       const mm = gsap.matchMedia();
 
       mm.add("(min-width: 1024px)", () => {
@@ -215,7 +208,7 @@ export function Projects() {
 
       return () => mm.revert();
     },
-    { scope: sphereRef, dependencies: [applyOrbit, isReady] }
+    { scope: sphereRef, dependencies: [applyOrbit] }
   );
 
   const handleScroll = () => {
@@ -242,82 +235,74 @@ export function Projects() {
     }
   };
 
-  const handlePrev = () => {
-    if (activeIndex > 0) scrollToCard(activeIndex - 1);
-  };
-
-  const handleNext = () => {
-    if (activeIndex < projectList.length - 1) scrollToCard(activeIndex + 1);
-  };
-
-  if (!isReady) {
-    return (
-      <section id="projects" className="relative w-full h-screen flex items-center justify-center bg-black text-white">
-        <div className="flex flex-col items-center gap-3">
-          <Loader2 className="h-6 w-6 animate-spin text-primary" />
-          <span className="text-xs font-mono text-white/50 tracking-widest uppercase">
-            Loading Workspace...
-          </span>
-        </div>
-      </section>
-    );
-  }
-
   return (
     <section id="projects" className="relative w-full h-screen overflow-hidden text-white bg-black">
       {/* Mobile & Tablet Horizontal Scroll View (< lg) */}
       <div className="lg:hidden relative w-full h-full flex flex-col justify-center items-center overflow-hidden py-8">
         
-        {/* Carousel Container with Absolute Nav Buttons */}
-        <div className="relative w-full flex items-center justify-center">
-          
-          {/* Previous Button */}
-          <button
-            onClick={handlePrev}
-            disabled={activeIndex === 0}
-            aria-label="Previous Project"
-            className="absolute left-3 z-20 p-2.5 rounded-full bg-black/60 border border-white/20 text-white backdrop-blur-md transition-all active:scale-90 disabled:opacity-20 disabled:pointer-events-none"
+        {/* Previous Button */}
+        <button
+          onClick={() => scrollToCard(Math.max(0, activeIndex - 1))}
+          disabled={activeIndex === 0}
+          aria-label="Previous slide"
+          className="absolute left-2 sm:left-4 top-[45%] -translate-y-1/2 z-20 p-3 rounded-full bg-primary text-white shadow-lg transition-all duration-300 disabled:opacity-20 disabled:pointer-events-none active:scale-95 hover:scale-105"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth={2.5}
+            stroke="currentColor"
+            className="w-5 h-5"
           >
-            <ChevronLeft className="w-5 h-5" />
-          </button>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+          </svg>
+        </button>
 
-          {/* Carousel */}
-          <div
-            ref={carouselRef}
-            onScroll={handleScroll}
-            className="flex gap-4 px-[calc(50vw-140px)] sm:px-[calc(50vw-160px)] md:px-[calc(50vw-180px)] w-full overflow-x-auto snap-x snap-mandatory overscroll-x-contain scrollbar-none [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden items-center touch-pan-x"
-            style={{ WebkitOverflowScrolling: "touch", touchAction: "pan-x" }}
+        {/* Next Button */}
+        <button
+          onClick={() => scrollToCard(Math.min(projectList.length - 1, activeIndex + 1))}
+          disabled={activeIndex === projectList.length - 1}
+          aria-label="Next slide"
+          className="absolute right-2 sm:right-4 top-[45%] -translate-y-1/2 z-20 p-3 rounded-full bg-primary text-white shadow-lg transition-all duration-300 disabled:opacity-20 disabled:pointer-events-none active:scale-95 hover:scale-105"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth={2.5}
+            stroke="currentColor"
+            className="w-5 h-5"
           >
-            {projectList.map((c, i) => (
-              <div
-                key={c.id}
-                className="shrink-0 snap-center rounded-xl overflow-hidden border border-white/10 bg-white/5 transition-transform duration-300"
-                style={{
-                  width: "min(75vw, 320px)",
-                  aspectRatio: "3 / 4",
-                }}
-              >
-                <ProjectCard
-                  title={c.title}
-                  description={c.description}
-                  src={c.src}
-                  href={c.href}
-                  techstack={c.techstack}
-                  focus={activeIndex === i}
-                />
-              </div>
-            ))}
-          </div>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+          </svg>
+        </button>
 
-          {/* Next Button */}
-          <button
-            onClick={handleNext}
-            disabled={activeIndex === projectList.length - 1}
-            aria-label="Next Project"
-            className="absolute right-3 z-20 p-2.5 rounded-full bg-black/60 border border-white/20 text-white backdrop-blur-md transition-all active:scale-90 disabled:opacity-20 disabled:pointer-events-none"
-          >
-            <ChevronRight className="w-5 h-5" />
-          </button>
+        <div
+          ref={carouselRef}
+          onScroll={handleScroll}
+          className="flex gap-4 px-[calc(50vw-140px)] sm:px-[calc(50vw-160px)] md:px-[calc(50vw-180px)] w-full overflow-x-auto snap-x snap-mandatory overscroll-x-contain scrollbar-none [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden items-center"
+          style={{ WebkitOverflowScrolling: "touch" }}
+        >
+          {projectList.map((c, i) => (
+            <div
+              key={c.id}
+              className="shrink-0 snap-center rounded-xl overflow-hidden border border-white/10 bg-white/5 select-none transition-transform duration-300"
+              style={{
+                width: "min(75vw, 320px)",
+                aspectRatio: "3 / 4",
+              }}
+            >
+              <ProjectCard
+                title={c.title}
+                description={c.description}
+                src={c.src}
+                href={c.href}
+                techstack={c.techstack}
+                focus={activeIndex === i} // Focus active item on mobile swipe
+              />
+            </div>
+          ))}
         </div>
 
         {/* Dynamic Pagination Indicators */}
@@ -336,7 +321,7 @@ export function Projects() {
 
         <div className="mt-4 pointer-events-none">
           <span className="text-white/30 text-[10px] tracking-[0.3em] uppercase font-mono">
-            swipe or use arrows
+            swipe or use arrows to explore
           </span>
         </div>
       </div>
@@ -383,7 +368,7 @@ export function Projects() {
                   src={c.src}
                   href={c.href}
                   techstack={c.techstack}
-                  focus={focusedIndex === i}
+                  focus={focusedIndex === i} // Evaluates true ONLY for the clicked/focused card
                 />
               </div>
             </div>
