@@ -26,10 +26,10 @@ const entries: EducationEntry[] = [
   {
     icon: <GraduationCap className="h-4 w-4" strokeWidth={1.75} />,
     title: "B.Eng. Civil Engineering",
-    subtitle: "Your University Name",
+    subtitle: "Federal University Oye—Ekiti",
     period: "2020 — 2026",
     description:
-      "Formal training in structural analysis, materials, and project management — foundations that carried over directly into building systems.",
+      "Formal training in structural analysis, materials, and project management foundations that carried over directly into building systems.",
   },
   {
     icon: <Code2 className="h-4 w-4" strokeWidth={1.75} />,
