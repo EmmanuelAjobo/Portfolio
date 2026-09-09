@@ -27,7 +27,7 @@ export const projectList: ProjectCardProps[] = [
     },
     {
         id: "4",
-        title: "AccountAbstraction",
+        title: "Account Abstraction",
         description: "An implementation of ERC-4337 account abstraction in Solidity, exploring smart contract wallets, user operations, and gasless transaction flows on the EVM.",
         href: "https://github.com/EmmanuelAjobo/AccountAbstraction",
         src: "/assets/images/img4.jpg",
@@ -45,7 +45,7 @@ export const projectList: ProjectCardProps[] = [
         id: "6",
         title: "Portfolio",
         description: "My personal portfolio site, designed and built from the ground up with smooth animations and a modern, responsive UI.",
-        href: "#proj",
+        href: "https://portfolio-ten-gilt-26.vercel.app/",
         src: "/assets/images/img6.jpg",
         techstack: ["Next JS", "UI/UX", "GSAP", "Shad Cn", "Tailwind CSS"]
     },
