@@ -78,7 +78,7 @@ If you take a look and have feedback — on the UI, performance, animations, or 
 
 - **LinkedIn:** [https://www.linkedin.com/in/emmanuel-ajobo/]
 - **Email:** [ajoboemmanuel04@gmail.com]
-- **Portfolio:** [your-live-url-here](https://portfolio-ten-gilt-26.vercel.app/)
+- **Portfolio:** [url](https://portfolio-ten-gilt-26.vercel.app/)
 
 ---
 
