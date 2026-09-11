@@ -2,7 +2,7 @@
 
 A personal developer portfolio built to showcase my projects and technical skills, with a fully custom theming system and smooth animated interactions.
 
-🔗 **Live Demo:** [your-live-url-here](https://your-live-url-here.vercel.app)
+🔗 **Live Demo:** [portfolio-ten-gilt-26.vercel.app](https://portfolio-ten-gilt-26.vercel.app/)
 
 ---
 
@@ -16,38 +16,37 @@ A personal developer portfolio built to showcase my projects and technical skill
 
 ## 🛠️ Tech Stack
 
-| Category | Tech |
-|---|---|
-| Framework | [Next.js 15](https://nextjs.org/) |
-| Styling | [Tailwind CSS v4](https://tailwindcss.com/), [shadcn/ui](https://ui.shadcn.com/) |
-| Animation | [GSAP](https://gsap.com/) |
-| Theme Management | `next-themes` (light/dark), custom `ColorThemeProvider` (accent color) |
-| Deployment | [Vercel](https://vercel.com/) |
+| Category         | Tech                                                                             |
+| ---------------- | -------------------------------------------------------------------------------- |
+| Framework        | [Next.js 15](https://nextjs.org/)                                                |
+| Styling          | [Tailwind CSS v4](https://tailwindcss.com/), [shadcn/ui](https://ui.shadcn.com/) |
+| Animation        | [GSAP](https://gsap.com/)                                                        |
+| Theme Management | `next-themes` (light/dark), custom `ColorThemeProvider` (accent color)           |
+| Deployment       | [Vercel](https://vercel.com/)                                                    |
 
 ## 📸 Screenshots
 
-<!-- Add screenshots or a GIF walkthrough here -->
-| Light Mode | Dark Mode |
-|---|---|
-| ![Light mode screenshot](./screenshots/light.png) | ![Dark mode screenshot](./screenshots/dark.png) |
+| Light Mode                                                                                                                                    | Dark Mode                                                                                                                                  |
+| --------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
+| [![Light mode screenshot](https://github.com/EmmanuelAjobo/Portfolio/raw/main/screenshots/light.png)](/EmmanuelAjobo/Portfolio/blob/main/screenshots/light.png) | [![Dark mode screenshot](https://github.com/EmmanuelAjobo/Portfolio/raw/main/screenshots/dark.png)](/EmmanuelAjobo/Portfolio/blob/main/screenshots/dark.png) |
 
 ## 🚀 Getting Started
 
 Clone the repository and install dependencies:
 
-```bash
-git clone https://github.com/your-username/your-repo.git
-cd your-repo
+```
+git clone https://github.com/EmmanuelAjobo/Portfolio.git
+cd Portfolio
 npm install
 ```
 
 Run the development server:
 
-```bash
+```
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) in your browser to view it.
+Open <http://localhost:3000> in your browser to view it.
 
 ## 📦 Deployment
 
@@ -55,8 +54,8 @@ This project is deployed on **Vercel** with continuous deployment enabled — ev
 
 To deploy your own version:
 
-1. Push this repo to your own GitHub account
-2. Import it into [Vercel](https://portfolio-ten-gilt-26.vercel.app/)
+1. Fork this repo to your own GitHub account
+2. Import it into [Vercel](https://vercel.com/)
 3. Vercel will auto-detect the Next.js framework and deploy it — no extra configuration needed
 
 ## 📁 Project Structure
@@ -64,10 +63,9 @@ To deploy your own version:
 ```
 ├── app/                # Next.js app router pages and layouts
 ├── components/         # Reusable UI components
-├── lib/                 # Utilities and helper functions
-├── providers/           # Theme and context providers
-├── public/              # Static assets
-└── styles/              # Global styles (Tailwind v4 config)
+├── lib/                # Utilities and helper functions
+├── public/             # Static assets
+└── tools/              # Project tooling/scripts
 ```
 
 ## 🙋 Feedback
@@ -76,9 +74,9 @@ If you take a look and have feedback — on the UI, performance, animations, or 
 
 ## 📬 Contact
 
-- **LinkedIn:** [https://www.linkedin.com/in/emmanuel-ajobo/]
-- **Email:** [ajoboemmanuel04@gmail.com]
-- **Portfolio:** [url](https://portfolio-ten-gilt-26.vercel.app/)
+- **LinkedIn:** [linkedin.com/in/emmanuel-ajobo](https://www.linkedin.com/in/emmanuel-ajobo/)
+- **Email:** [ajoboemmanuel04@gmail.com](mailto:ajoboemmanuel04@gmail.com)
+- **Portfolio:** [portfolio-ten-gilt-26.vercel.app](https://portfolio-ten-gilt-26.vercel.app/)
 
 ---
 
